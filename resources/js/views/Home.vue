@@ -8,7 +8,8 @@
                             {{ status.user.name }} said
                         </p>
                         <p>
-                            {{ postedOn(status) }}
+                            <!-- vue filters instead of postedOn method -->
+                            {{ status.created_at | ago | capitalize }}
                         </p>
                     </div>
 
@@ -32,9 +33,13 @@ export default {
     created() {
         Status.all( statuses => this.statuses = statuses);
     },
-    methods: {
-        postedOn(status) {
-            return moment(status.created_at).fromNow();
+
+    filters: {
+        ago(date) {
+            return moment(date).fromNow();
+        },
+        capitalize(value) {
+            return value.toUpperCase();
         }
     }
 
